@@ -4,10 +4,5 @@
 # SPDX-License-Identifier: Apache-2.0
 
 UPD_DIR=$(cd $(dirname "$0") && pwd)
-for chart in ${UPD_DIR}/common/*
-do
-	echo "Update dependency for `basename $chart`..."
-        rm -f ${chart}/Chart.lock
-        rm -rf ${chart}/charts/
-	helm dependency update ${chart}
-done
+export -f helm
+find ${UPD_DIR}/common -maxdepth 1 -type d | xargs -I {} -P 8 bash -c 'echo "Update dependency for $(basename {})..."; rm -f {}/Chart.lock; rm -rf {}/charts/; helm dependency update {}'

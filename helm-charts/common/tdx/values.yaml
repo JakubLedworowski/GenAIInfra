@@ -1,0 +1,5 @@
+tdx:
+  enabled: true
+  common:
+    annotations:
+      testTdx: "something"
