@@ -83,3 +83,9 @@ annotations:
 {{- toYaml $annotations | nindent 2 }}
 {{- end }}
 {{- end }}
+
+{{- define "tei.runtimeClassName" -}}
+{{- with .Values.tdx }}
+runtimeClassName: {{ .tdx.common.runtimeClassName }}
+{{- end }}
+{{- end }}

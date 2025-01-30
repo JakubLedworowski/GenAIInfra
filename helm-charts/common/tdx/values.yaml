@@ -1,5 +1,6 @@
 tdx:
-  enabled: true
   common:
+    runtimeClassName: kata-qemu-tdx
     annotations:
-      testTdx: "something"
+      io.containerd.cri.runtime-handler: "kata-qemu-tdx"
+      io.katacontainers.config.runtime.create_container_timeout: "1800"
