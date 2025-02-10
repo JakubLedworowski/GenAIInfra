@@ -134,6 +134,3 @@ global:
 
   # Prometheus Helm install release name needed for serviceMonitors
   prometheusRelease: prometheus-stack
-
-tei:
-  tdxEnabled: false
