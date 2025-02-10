@@ -136,4 +136,4 @@ global:
   prometheusRelease: prometheus-stack
 
 tei:
-  tdxFeature: true
+  tdxEnabled: false
