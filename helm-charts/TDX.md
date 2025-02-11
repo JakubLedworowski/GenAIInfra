@@ -80,9 +80,24 @@ Follow the steps below to deploy ChatQnA:
    ./update_dependency.sh
    helm dependency update $chartname
    ```
-   
+
 2. Deploy the Helm Chart setting the `tdxEnabled` flag for each microservice you want to run using Intel TDX, for example:
 
    ```
-   helm install $myrelease $chartname --set global.HUGGINGFACEHUB_API_TOKEN="insert-your-huggingface-token-here" --set guardrails-usvc.tdxEnabled=true --set llm-uservice.tdxEnabled=true --set redis-vector-db.tdxEnabled=true --set reranking-usvc.tdxEnabled=true --set retriever-usvc.tdxEnabled=true --set tei.tdxEnabled=true --set teirerank.tdxEnabled=true --set tgi.tdxEnabled=true
+   helm install $myrelease $chartname \
+      --set global.HUGGINGFACEHUB_API_TOKEN="insert-your-huggingface-token-here" \
+      --set redis-vector-db.tdxEnabled=true --set redis-vector-db.resources.limits.memory=8Gi \
+      --set retriever-usvc.tdxEnabled=true --set retriever-usvc.resources.limits.memory=8Gi \
+      --set tei.tdxEnabled=true --set tei.resources.limits.memory=8Gi \
+      --set teirerank.tdxEnabled=true --set teirerank.resources.limits.memory=8Gi \
+      --set vllm.tdxEnabled=true --set vllm.resources.limits.memory=8Gi
    ```
+   
+   > [!NOTE]
+   > The `resources.limits` and `resources.requests` needs to be set when the Intel TDX is used.
+   > 
+   > The above example sets the memory limits and requests to 4Gi for each microservice.
+   > 
+   > By default, each Kubernetes pod will be assigned `1` CPU and `2Gi` of memory, but half of it will be used for filesystem.
+   > 
+   > If the pods fail to start due to lack of disk space, increase the memory limits.
